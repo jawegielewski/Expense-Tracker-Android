@@ -5,9 +5,12 @@ This project was generated using Kotlin  version = 2.2.10 and minSdk = 24.
 ## Preparation
 1. Download adb (Android Debug Bridge) in order to connect physical phone to computer
 2. Enable USB debugging in your phone from developer tools in settings;
-3. Put your Gemini API key into application.properties or add an environmental variable as GEMINI_API_KEY
+3. Connect your device
+4. Use command in CMD (Windows) 'adb reverse tcp:8080 tcp:8080'
+5. Put your Gemini API key into application.properties or add an environmental variable as GEMINI_API_KEY
 
-4. To run the project go to:
+## Run
+To run the project go to:
 
 ```
 menu > build > assemble project
@@ -16,7 +19,7 @@ green triangle run 'app'
 
 ## App features
 
-App allows to add and show expanses related to driving a car:
+App allows to add and show expenses related to driving a car:
 
 ```
 adding expense
