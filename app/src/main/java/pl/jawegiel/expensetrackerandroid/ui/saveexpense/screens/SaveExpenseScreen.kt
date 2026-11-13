@@ -31,8 +31,7 @@ import pl.jawegiel.expensetrackerandroid.ui.saveexpense.components.Toolbar
 
 @Composable
 fun SaveExpenseScreen(
-    viewModel: SaveExpenseViewModel = hiltViewModel(),
-    onBackClick: () -> Unit,
+    viewModel: SaveExpenseViewModel = hiltViewModel(), onBackClick: () -> Unit
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
     val coroutineScope = rememberCoroutineScope()

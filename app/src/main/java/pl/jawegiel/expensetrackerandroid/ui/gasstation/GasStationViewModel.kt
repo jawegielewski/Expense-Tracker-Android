@@ -7,43 +7,49 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import pl.jawegiel.expensetrackerandroid.data.model.Expense
-import pl.jawegiel.expensetrackerandroid.domain.repository.ExpenseRepository
+import pl.jawegiel.expensetrackerandroid.data.remote.AiApiService
 import javax.inject.Inject
 
 @HiltViewModel
 class GasStationViewModel @Inject constructor(
-    private val repository: ExpenseRepository
+    private val aiApiService: AiApiService
 ) : ViewModel() {
 
-    companion object {
-        private const val TAG = "GasStationViewModel"
+    private val _promptInput = MutableStateFlow("")
+    val promptInput: StateFlow<String> = _promptInput.asStateFlow()
+
+    private val _isLoading = MutableStateFlow(false)
+    val isLoading: StateFlow<Boolean> = _isLoading.asStateFlow()
+
+    private val _uiState = MutableStateFlow<PromptUiState>(PromptUiState.Initial)
+    val uiState: StateFlow<PromptUiState> = _uiState.asStateFlow()
+
+    fun onPromptInputChange(newInput: String) {
+        _promptInput.value = newInput
     }
 
-    private val _bottomSheetText = MutableStateFlow<Expense?>(null)
-    val bottomSheetText: StateFlow<Expense?> = _bottomSheetText.asStateFlow()
-
-    fun onExpenseChange(expense: Expense) {
-        _bottomSheetText.value?.name = expense.name
-        _bottomSheetText.value?.price = expense.price
-//        _bottomSheetText.value?.date = expense.date
-    }
-
-    fun submitData() {
-        val dataToSave: Expense? = _bottomSheetText.value
-        if (dataToSave != null) {
-            addExpense(dataToSave)
-            clearText()
-        }
-    }
-
-    fun addExpense(expense: Expense) {
+    fun sendPrompt(city: String) {
         viewModelScope.launch {
-            repository.addExpense(expense)
+            _isLoading.value = true
+
+            try {
+                val recommendation = aiApiService.getRecommendation(city)
+                if (recommendation.isNotEmpty()) {
+                    _uiState.value = PromptUiState.Success(recommendation)
+                } else {
+                    _uiState.value = PromptUiState.Success("No recommendations found.")
+                }
+            } catch (e: Exception) {
+                _uiState.value = PromptUiState.Error(e.localizedMessage ?: "An error occurred")
+            } finally {
+                _isLoading.value = false
+            }
         }
     }
 
-    fun clearText() {
-        _bottomSheetText.value = null
+    sealed interface PromptUiState {
+        data object Initial : PromptUiState
+        data class Success(val outputText: String) : PromptUiState
+        data class Error(val errorMessage: String) : PromptUiState
     }
 }

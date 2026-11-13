@@ -1,5 +1,6 @@
 package pl.jawegiel.expensetrackerandroid.data.datasource
 
+import android.util.Log
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
@@ -11,13 +12,26 @@ class ExpenseRemoteDataSourceImpl @Inject constructor(
     private val apiService: ExpenseApiService
 ) : ExpenseRemoteDataSource {
 
+    companion object {
+        private const val TAG = "ExpenseRemoteDataSource"
+    }
 
     override suspend fun addExpense(expense: Expense) {
-        apiService.createExpense(expense)
+        try {
+            apiService.createExpense(expense)
+        } catch (e: Exception) {
+            Log.e(TAG, "Failed to create expense", e)
+        }
     }
 
     override fun getExpenses(): Flow<List<Expense>> = callbackFlow {
-        trySend(apiService.getExpenses())
+        try {
+            val expenses = apiService.getExpenses()
+            trySend(expenses)
+        } catch (e: Exception) {
+            Log.e(TAG, "Failed to fetch expenses", e)
+            trySend(emptyList())
+        }
         awaitClose { }
     }
 }

@@ -1,3 +1,5 @@
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
@@ -18,6 +20,14 @@ android {
         versionCode = 1
         versionName = "1.0"
 
+
+
+        val apiKey: String = gradleLocalProperties(rootDir, providers)
+            .getProperty("Gemini_API_KEY") ?: ""
+
+        // 1. Expose to Kotlin/Java code via BuildConfig
+        buildConfigField("String", "Gemini_API_KEY", "\"$apiKey\"")
+
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -35,6 +45,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 }
 
@@ -55,6 +66,14 @@ dependencies {
     implementation(libs.converter.gson)
     implementation(libs.androidx.hilt.lifecycle.viewmodel.compose)
     implementation(libs.androidx.hilt.navigation.compose)
+
+    // Add the Firebase AI Logic SDK
+    implementation("com.google.ai.client.generativeai:generativeai:0.9.0")
+
+    // ViewModel & Coroutines for Compose
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.7")
+
+    implementation("com.squareup.retrofit2:converter-scalars:2.11.0")
 
     // Hilt
     implementation(libs.hilt.android)

@@ -14,9 +14,6 @@ class ExpenseRepositoryImpl @Inject constructor(
     private val expenseRemoteDataSourceImpl: ExpenseRemoteDataSourceImpl
 ) : ExpenseRepository {
 
-    private val expensesFlow = MutableStateFlow<List<Expense>>(emptyList())
-
-
     override suspend fun addExpense(expense: Expense) {
         expenseRemoteDataSourceImpl.addExpense(expense)
     }

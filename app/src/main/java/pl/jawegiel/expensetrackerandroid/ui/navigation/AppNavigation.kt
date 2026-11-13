@@ -6,6 +6,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import pl.jawegiel.expensetrackerandroid.ui.gasstation.GasStationViewModel
 import pl.jawegiel.expensetrackerandroid.ui.getexpenses.screens.ExpensesScreen
 import pl.jawegiel.expensetrackerandroid.ui.gasstation.screens.GasStationScreen
 import pl.jawegiel.expensetrackerandroid.ui.main.MainViewModel
@@ -25,6 +26,7 @@ fun AppNavigation() {
     val navController = rememberNavController()
     val mainViewModel: MainViewModel = viewModel()
     val saveExpenseViewModel: SaveExpenseViewModel = hiltViewModel()
+    val gasStationViewModel: GasStationViewModel = hiltViewModel()
 
     NavHost(navController = navController, startDestination = Screen.Main.route) {
         composable(Screen.Main.route) {
@@ -41,10 +43,14 @@ fun AppNavigation() {
         composable(Screen.SaveExpense.route) {
             SaveExpenseScreen(
                 viewModel = saveExpenseViewModel,
-                onBackClick = { navController.popBackStack() })
+                onBackClick = { navController.popBackStack() }
+            )
         }
         composable(Screen.GasStation.route) {
-            GasStationScreen(onBackClick = { navController.popBackStack() })
+            GasStationScreen(
+                viewModel = gasStationViewModel,
+                onBackClick = { navController.popBackStack() }
+            )
         }
     }
 }

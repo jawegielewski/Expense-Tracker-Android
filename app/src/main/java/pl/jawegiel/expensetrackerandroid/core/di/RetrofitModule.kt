@@ -1,31 +1,47 @@
 package pl.jawegiel.expensetrackerandroid.core.di
 
-import dagger.Binds
+import com.google.gson.GsonBuilder
+import com.google.gson.Strictness
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import pl.jawegiel.expensetrackerandroid.data.datasource.ExpenseRemoteDataSource
-import pl.jawegiel.expensetrackerandroid.data.datasource.ExpenseRemoteDataSourceImpl
+import pl.jawegiel.expensetrackerandroid.data.remote.AiApiService
 import pl.jawegiel.expensetrackerandroid.data.remote.ExpenseApiService
-import pl.jawegiel.expensetrackerandroid.data.remote.RetrofitClient
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.converter.scalars.ScalarsConverterFactory
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class RetrofitModule {
+object RetrofitModule {
 
-    @Binds
+    private const val BASE_URL = "http://localhost:8080/"
+
+    @Provides
     @Singleton
-    abstract fun bindExpenseRemoteDataSource(
-        impl: ExpenseRemoteDataSourceImpl
-    ): ExpenseRemoteDataSource
+    fun provideRetrofit(): Retrofit {
+        val gson = GsonBuilder()
+            .setStrictness(Strictness.LENIENT)
+            .create()
 
-    companion object {
-        @Provides
-        @Singleton
-        fun provideExpenseApiService(): ExpenseApiService {
-            return RetrofitClient.apiService
-        }
+        return Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(ScalarsConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(gson))
+            .build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideExpenseApiService(retrofit: Retrofit): ExpenseApiService {
+        return retrofit.create(ExpenseApiService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideAiApiService(retrofit: Retrofit): AiApiService {
+        return retrofit.create(AiApiService::class.java)
     }
 }
