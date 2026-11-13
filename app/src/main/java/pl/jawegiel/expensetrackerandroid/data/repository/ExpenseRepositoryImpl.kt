@@ -18,7 +18,7 @@ class ExpenseRepositoryImpl @Inject constructor(
 
 
     override suspend fun addExpense(expense: Expense) {
-        TODO("Not yet implemented")
+        expenseRemoteDataSourceImpl.addExpense(expense)
     }
 
     override fun getExpenses() = flow {

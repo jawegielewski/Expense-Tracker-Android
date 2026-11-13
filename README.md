@@ -14,7 +14,7 @@ To run the project go to:
 
 ```
 menu > build > assemble project
-green triangle run 'app'
+green triangle labeled run 'app'
 ```
 
 ## App features

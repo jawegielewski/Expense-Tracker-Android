@@ -13,7 +13,7 @@ class ExpenseRemoteDataSourceImpl @Inject constructor(
 
 
     override suspend fun addExpense(expense: Expense) {
-        TODO("Not yet implemented")
+        apiService.createExpense(expense)
     }
 
     override fun getExpenses(): Flow<List<Expense>> = callbackFlow {

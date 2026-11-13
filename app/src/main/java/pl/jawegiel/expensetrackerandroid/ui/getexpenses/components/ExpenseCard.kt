@@ -10,20 +10,21 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import pl.jawegiel.expensetrackerandroid.data.model.Expense
 
 @Composable
-fun PosterCard(expense: Expense) {
+fun ExpenseCard(expense: Expense) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 12.dp, horizontal = 12.dp),
-        verticalAlignment = Alignment.CenterVertically
+            .padding(vertical = 10.dp, horizontal = 12.dp),
+        verticalAlignment = Alignment.CenterVertically,
     ) {
-        Text(expense.id.toString(), modifier = Modifier.weight(0.8f))
-        Text(expense.name, modifier = Modifier.weight(2f))
-        Text(expense.price.toString(), modifier = Modifier.weight(1.5f))
-        Text(expense.formattedDate, modifier = Modifier.weight(2f))
+        Text(expense.id?.toString() ?: "", fontSize = 18.sp, color = Color(0xFF1E293B), modifier = Modifier.weight(0.8f))
+        Text(expense.name, fontSize = 18.sp, color = Color(0xFF1E293B), modifier = Modifier.weight(2f))
+        Text(expense.price.toString(), fontSize = 18.sp, color = Color(0xFF1E293B), modifier = Modifier.weight(1.5f))
+        Text(expense.formattedDate, fontSize = 18.sp, color = Color(0xFF64748B), modifier = Modifier.weight(2f))
     }
-    HorizontalDivider(color = Color(0xFFE2E8F0))
+    HorizontalDivider(color = Color(0xFFE2E8F0), thickness = 0.5.dp)
 }

@@ -4,7 +4,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-data class Expense(var id: Long, var name: String, var price: Int, var dateMillis: Long) {
+data class Expense(var id: Long? = null, var name: String, var price: Int, var dateMillis: Long) {
 
     val date: Date
         get() = Date(dateMillis)

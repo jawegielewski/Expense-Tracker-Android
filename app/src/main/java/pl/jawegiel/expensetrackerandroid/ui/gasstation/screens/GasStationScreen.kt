@@ -1,4 +1,4 @@
-package pl.jawegiel.expensetrackerandroid.ui.main.screens
+package pl.jawegiel.expensetrackerandroid.ui.gasstation.screens
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

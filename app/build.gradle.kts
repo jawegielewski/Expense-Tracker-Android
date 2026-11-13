@@ -54,6 +54,7 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
     implementation(libs.androidx.hilt.lifecycle.viewmodel.compose)
+    implementation(libs.androidx.hilt.navigation.compose)
 
     // Hilt
     implementation(libs.hilt.android)
