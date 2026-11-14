@@ -71,8 +71,7 @@ fun FormFields(viewModel: SaveExpenseViewModel) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable { showDatePicker = true }
-    ) {
+            .clickable { showDatePicker = true }) {
         OutlinedTextField(
             value = viewModel.dateMillis,
             onValueChange = {},
@@ -106,30 +105,24 @@ fun FormFields(viewModel: SaveExpenseViewModel) {
                 override fun isSelectableDate(utcTimeMillis: Long): Boolean {
                     return utcTimeMillis <= System.currentTimeMillis()
                 }
-            }
-        )
-        DatePickerDialog(
-            onDismissRequest = { showDatePicker = false },
-            confirmButton = {
-                TextButton(
-                    onClick = {
-                        showDatePicker = false
-                        datePickerState.selectedDateMillis?.let { millis ->
-                            viewModel.selectedMillis = millis
-                            val formatter = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-                            viewModel.dateMillis = formatter.format(Date(millis))
-                        }
+            })
+        DatePickerDialog(onDismissRequest = { showDatePicker = false }, confirmButton = {
+            TextButton(
+                onClick = {
+                    showDatePicker = false
+                    datePickerState.selectedDateMillis?.let { millis ->
+                        viewModel.selectedMillis = millis
+                        val formatter = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+                        viewModel.dateMillis = formatter.format(Date(millis))
                     }
-                ) {
-                    Text("OK")
-                }
-            },
-            dismissButton = {
-                TextButton(onClick = { showDatePicker = false }) {
-                    Text("Cancel")
-                }
+                }) {
+                Text("OK")
             }
-        ) {
+        }, dismissButton = {
+            TextButton(onClick = { showDatePicker = false }) {
+                Text("Cancel")
+            }
+        }) {
             DatePicker(state = datePickerState)
         }
     }

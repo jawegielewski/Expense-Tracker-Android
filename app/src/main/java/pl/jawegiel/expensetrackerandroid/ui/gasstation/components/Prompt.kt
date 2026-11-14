@@ -21,16 +21,14 @@ import pl.jawegiel.expensetrackerandroid.ui.gasstation.GasStationViewModel
 
 @Composable
 fun GeminiPrompt(
-    modifier: Modifier = Modifier,
-    viewModel: GasStationViewModel = viewModel()
+    modifier: Modifier = Modifier, viewModel: GasStationViewModel = viewModel()
 ) {
     val promptInput by viewModel.promptInput.collectAsState()
     val uiState by viewModel.uiState.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()
 
     Column(
-        modifier = modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
+        modifier = modifier.fillMaxSize(), verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
 
         OutlinedTextField(
@@ -46,7 +44,6 @@ fun GeminiPrompt(
             )
         )
 
-        // Submit Button
         Button(
             onClick = { viewModel.sendPrompt(promptInput) },
             enabled = promptInput.isNotBlank() && !isLoading,
@@ -57,7 +54,6 @@ fun GeminiPrompt(
 
         HorizontalDivider()
 
-        // Output Area
         PromptResponse(isLoading, uiState)
     }
 }

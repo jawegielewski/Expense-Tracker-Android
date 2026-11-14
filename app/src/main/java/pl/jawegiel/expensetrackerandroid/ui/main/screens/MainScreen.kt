@@ -36,9 +36,7 @@ fun MainScreen(
     var menuExpanded by remember { mutableStateOf(false) }
 
     Scaffold(
-        modifier = Modifier.fillMaxSize(),
-        containerColor = Color(0xFFF1F5F9),
-        topBar = {
+        modifier = Modifier.fillMaxSize(), containerColor = Color(0xFFF1F5F9), topBar = {
             Toolbar(
                 menuExpanded = menuExpanded,
                 onMenuClick = { menuExpanded = !menuExpanded },
@@ -48,8 +46,7 @@ fun MainScreen(
                 onNavigateToSaveExpense = onNavigateToSaveExpense,
                 onNavigateToGasStation = onNavigateToGasStation
             )
-        }
-    ) { innerPadding ->
+        }) { innerPadding ->
         Column(
             modifier = Modifier
                 .fillMaxSize()

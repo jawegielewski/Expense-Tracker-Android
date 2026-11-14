@@ -18,12 +18,9 @@ import pl.jawegiel.expensetrackerandroid.ui.gasstation.components.Toolbar
 @Composable
 fun GasStationScreen(onBackClick: () -> Unit, viewModel: GasStationViewModel = hiltViewModel()) {
     Scaffold(
-        modifier = Modifier.fillMaxSize(),
-        containerColor = Color(0xFFF1F5F9),
-        topBar = {
+        modifier = Modifier.fillMaxSize(), containerColor = Color(0xFFF1F5F9), topBar = {
             Toolbar(onBackClick)
-        }
-    ) { innerPadding ->
+        }) { innerPadding ->
         Column(
             modifier = Modifier
                 .fillMaxSize()

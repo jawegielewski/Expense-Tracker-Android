@@ -17,11 +17,7 @@ class ExpenseRemoteDataSourceImpl @Inject constructor(
     }
 
     override suspend fun addExpense(expense: Expense) {
-        try {
-            apiService.createExpense(expense)
-        } catch (e: Exception) {
-            Log.e(TAG, "Failed to create expense", e)
-        }
+        apiService.createExpense(expense)
     }
 
     override fun getExpenses(): Flow<List<Expense>> = callbackFlow {

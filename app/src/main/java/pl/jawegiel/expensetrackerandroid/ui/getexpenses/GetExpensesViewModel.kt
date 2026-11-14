@@ -17,8 +17,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class GetExpensesViewModel @Inject constructor(
-    private val repository: ExpenseRepository,
-    private val expenseApiService: ExpenseApiService
+    private val repository: ExpenseRepository, private val expenseApiService: ExpenseApiService
 ) : ViewModel() {
 
     var expenses by mutableStateOf<List<Expense>>(emptyList())
@@ -28,8 +27,7 @@ class GetExpensesViewModel @Inject constructor(
     var errorMessage by mutableStateOf<String?>(null)
         private set
 
-    val expensesState: StateFlow<List<Expense>> = repository.getExpenses()
-        .stateIn(
+    val expensesState: StateFlow<List<Expense>> = repository.getExpenses().stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5000),
             initialValue = emptyList()

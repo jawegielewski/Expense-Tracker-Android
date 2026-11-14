@@ -21,10 +21,30 @@ fun ExpenseCard(expense: Expense) {
             .padding(vertical = 10.dp, horizontal = 12.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        Text(expense.id?.toString() ?: "", fontSize = 18.sp, color = Color(0xFF1E293B), modifier = Modifier.weight(0.8f))
-        Text(expense.name, fontSize = 18.sp, color = Color(0xFF1E293B), modifier = Modifier.weight(2f))
-        Text(expense.price.toString(), fontSize = 18.sp, color = Color(0xFF1E293B), modifier = Modifier.weight(1.5f))
-        Text(expense.formattedDate, fontSize = 18.sp, color = Color(0xFF64748B), modifier = Modifier.weight(2f))
+        Text(
+            expense.id?.toString() ?: "",
+            fontSize = 18.sp,
+            color = Color(0xFF1E293B),
+            modifier = Modifier.weight(0.8f)
+        )
+        Text(
+            expense.name,
+            fontSize = 18.sp,
+            color = Color(0xFF1E293B),
+            modifier = Modifier.weight(2f)
+        )
+        Text(
+            expense.price.toString(),
+            fontSize = 18.sp,
+            color = Color(0xFF1E293B),
+            modifier = Modifier.weight(1.5f)
+        )
+        Text(
+            expense.formattedDate,
+            fontSize = 18.sp,
+            color = Color(0xFF64748B),
+            modifier = Modifier.weight(2f)
+        )
     }
     HorizontalDivider(color = Color(0xFFE2E8F0), thickness = 0.5.dp)
 }

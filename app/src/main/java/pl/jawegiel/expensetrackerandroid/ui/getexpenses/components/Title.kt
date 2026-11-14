@@ -19,7 +19,11 @@ fun Title(
     innerPadding: PaddingValues, expenses: List<Expense>
 ) {
     Column(
-        modifier = Modifier.fillMaxSize().padding(innerPadding).padding(16.dp), horizontalAlignment = Alignment.CenterHorizontally
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(innerPadding)
+            .padding(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
             text = "Here are your expenses",

@@ -2,6 +2,10 @@
 
 This project was generated using Kotlin version = 2.2.10 and requires minSdk = 24.
 
+## Presentation
+<video src="ExpenseTrackerAndroid.mp4" controls title="Video"></video>
+
+
 ## Preparation
 1. Download adb (Android Debug Bridge) in order to connect physical phone to computer;
 2. Enable USB debugging in your phone from developer tools in settings;
@@ -29,7 +33,7 @@ generating "best gas station in specific loation"
 ```
 
 
-## Additional Informations
+## Additional Information
 
 Technologies used in project:
 

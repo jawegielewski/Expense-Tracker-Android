@@ -1,14 +1,14 @@
 package pl.jawegiel.expensetrackerandroid.ui.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import pl.jawegiel.expensetrackerandroid.ui.gasstation.GasStationViewModel
-import pl.jawegiel.expensetrackerandroid.ui.getexpenses.screens.ExpensesScreen
 import pl.jawegiel.expensetrackerandroid.ui.gasstation.screens.GasStationScreen
+import pl.jawegiel.expensetrackerandroid.ui.getexpenses.screens.ExpensesScreen
 import pl.jawegiel.expensetrackerandroid.ui.main.MainViewModel
 import pl.jawegiel.expensetrackerandroid.ui.main.screens.MainScreen
 import pl.jawegiel.expensetrackerandroid.ui.saveexpense.SaveExpenseViewModel
@@ -34,23 +34,18 @@ fun AppNavigation() {
                 viewModel = mainViewModel,
                 onNavigateToExpenses = { navController.navigate(Screen.Expenses.route) },
                 onNavigateToSaveExpense = { navController.navigate(Screen.SaveExpense.route) },
-                onNavigateToGasStation = { navController.navigate(Screen.GasStation.route) }
-            )
+                onNavigateToGasStation = { navController.navigate(Screen.GasStation.route) })
         }
         composable(Screen.Expenses.route) {
             ExpensesScreen(onBackClick = { navController.popBackStack() })
         }
         composable(Screen.SaveExpense.route) {
             SaveExpenseScreen(
-                viewModel = saveExpenseViewModel,
-                onBackClick = { navController.popBackStack() }
-            )
+                viewModel = saveExpenseViewModel, onBackClick = { navController.popBackStack() })
         }
         composable(Screen.GasStation.route) {
             GasStationScreen(
-                viewModel = gasStationViewModel,
-                onBackClick = { navController.popBackStack() }
-            )
+                viewModel = gasStationViewModel, onBackClick = { navController.popBackStack() })
         }
     }
 }

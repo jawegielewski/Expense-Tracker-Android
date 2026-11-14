@@ -1,6 +1,5 @@
 package pl.jawegiel.expensetrackerandroid.data.repository
 
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.flow
 import pl.jawegiel.expensetrackerandroid.data.datasource.ExpenseRemoteDataSourceImpl

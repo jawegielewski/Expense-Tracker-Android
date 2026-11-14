@@ -10,13 +10,14 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import pl.jawegiel.expensetrackerandroid.data.model.Expense
 import pl.jawegiel.expensetrackerandroid.domain.repository.ExpenseRepository
-import java.math.BigDecimal
-import java.math.RoundingMode
+import pl.jawegiel.expensetrackerandroid.domain.usecase.ValidateExpenseUseCase
+import pl.jawegiel.expensetrackerandroid.domain.usecase.ValidationResult
 import javax.inject.Inject
 
 @HiltViewModel
 class SaveExpenseViewModel @Inject constructor(
     private val repository: ExpenseRepository,
+    private val validateExpenseUseCase: ValidateExpenseUseCase
 ) : ViewModel() {
 
     companion object {
@@ -29,67 +30,37 @@ class SaveExpenseViewModel @Inject constructor(
     var selectedMillis: Long? = null
 
     fun validateAndSave(onSuccess: () -> Unit, onError: (String) -> Unit) {
-        // Name validation
-        if (name.isBlank()) {
-            onError("Name is required")
-            return
-        }
-        if (!name.matches(Regex("^[^0-9]*$"))) {
-            onError("Name must not contain numbers")
-            return
-        }
-        if (name.length !in 3..50) {
-            onError("Name must be of length between 3-50")
-            return
-        }
+        val validationResult = validateExpenseUseCase(
+            name = name,
+            price = price,
+            dateMillis = dateMillis,
+            selectedMillis = selectedMillis
+        )
 
-        // Price validation
-        if (price.isBlank()) {
-            onError("Price is required")
-            return
+        when (validationResult) {
+            is ValidationResult.Success -> {
+                val priceInt = price.toBigDecimal().toInt()
+                saveExpenseConfirmed(selectedMillis!!, priceInt, onSuccess, onError)
+            }
+            is ValidationResult.Error -> onError(validationResult.message)
         }
-        val bigDecimalPrice = price.toBigDecimalOrNull()
-        if (bigDecimalPrice == null || bigDecimalPrice <= BigDecimal.ZERO) {
-            onError("Price must be greater than zero")
-            return
-        }
-        if (bigDecimalPrice.scale() > 2) {
-            onError("Price format must be up to 6 digits and 2 decimals")
-            return
-        }
-        val intVal = bigDecimalPrice.setScale(0, RoundingMode.DOWN).toBigInteger().abs()
-        if (intVal.toString().length > 6) {
-            onError("Price format must be up to 6 digits and 2 decimals")
-            return
-        }
-
-        // Date validation
-        if (selectedMillis == null || dateMillis.isBlank()) {
-            onError("Date is required")
-            return
-        }
-        val millis = selectedMillis!!
-        if (millis < 1000000000000L) {
-            onError("Date is not correct")
-            return
-        }
-        if (millis.toString().length > 13) {
-            onError("Date is not correct")
-            return
-        }
-
-        saveExpenseConfirmed(millis, bigDecimalPrice.toInt(), onSuccess)
     }
 
-    private fun saveExpenseConfirmed(millis: Long, priceInt: Int, onSuccess: () -> Unit) {
+    private fun saveExpenseConfirmed(
+        millis: Long,
+        priceInt: Int,
+        onSuccess: () -> Unit,
+        onError: (String) -> Unit
+    ) {
         Log.d(TAG, "Saving expense: name=$name, price=$priceInt, date=$millis")
+
         viewModelScope.launch {
             try {
                 val expense = Expense(
                     id = null,
                     name = name,
                     price = priceInt,
-                    dateMillis = millis,
+                    dateMillis = millis
                 )
                 repository.addExpense(expense)
 
@@ -98,6 +69,7 @@ class SaveExpenseViewModel @Inject constructor(
                 onSuccess()
             } catch (e: Exception) {
                 Log.e(TAG, "Failed to save expense", e)
+                onError(e.localizedMessage ?: "Failed to save expense")
             }
         }
     }

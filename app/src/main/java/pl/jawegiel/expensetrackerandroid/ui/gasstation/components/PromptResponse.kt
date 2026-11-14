@@ -17,29 +17,33 @@ fun PromptResponse(
     isLoading: Boolean, uiState: GasStationViewModel.PromptUiState
 ) {
     Box(
-        modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState())
+        modifier = Modifier
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState())
     ) {
         if (isLoading) {
             CircularProgressIndicator(
                 modifier = Modifier.align(Alignment.Center)
             )
         } else {
-            when (val state = uiState) {
+            when (uiState) {
                 is GasStationViewModel.PromptUiState.Initial -> {
                     Text(
-                        text = "Your AI response will appear here.", color = MaterialTheme.colorScheme.onSurfaceVariant
+                        text = "Your AI response will appear here.",
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
 
                 is GasStationViewModel.PromptUiState.Success -> {
                     Text(
-                        text = state.outputText, style = MaterialTheme.typography.bodyLarge
+                        text = uiState.outputText, style = MaterialTheme.typography.bodyLarge
                     )
                 }
 
                 is GasStationViewModel.PromptUiState.Error -> {
                     Text(
-                        text = "Error: ${state.errorMessage}", color = MaterialTheme.colorScheme.error
+                        text = "Error: ${uiState.errorMessage}",
+                        color = MaterialTheme.colorScheme.error
                     )
                 }
             }

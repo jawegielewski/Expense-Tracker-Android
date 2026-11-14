@@ -22,15 +22,11 @@ object RetrofitModule {
     @Provides
     @Singleton
     fun provideRetrofit(): Retrofit {
-        val gson = GsonBuilder()
-            .setStrictness(Strictness.LENIENT)
-            .create()
+        val gson = GsonBuilder().setStrictness(Strictness.LENIENT).create()
 
-        return Retrofit.Builder()
-            .baseUrl(BASE_URL)
+        return Retrofit.Builder().baseUrl(BASE_URL)
             .addConverterFactory(ScalarsConverterFactory.create())
-            .addConverterFactory(GsonConverterFactory.create(gson))
-            .build()
+            .addConverterFactory(GsonConverterFactory.create(gson)).build()
     }
 
     @Provides

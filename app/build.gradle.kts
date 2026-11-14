@@ -66,21 +66,14 @@ dependencies {
     implementation(libs.converter.gson)
     implementation(libs.androidx.hilt.lifecycle.viewmodel.compose)
     implementation(libs.androidx.hilt.navigation.compose)
-
-    // Add the Firebase AI Logic SDK
-    implementation("com.google.ai.client.generativeai:generativeai:0.9.0")
-
-    // ViewModel & Coroutines for Compose
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.7")
-
-    implementation("com.squareup.retrofit2:converter-scalars:2.11.0")
-
-    // Hilt
+    implementation(libs.generativeai)
+    implementation(libs.converter.scalars)
     implementation(libs.hilt.android)
+
     ksp(libs.hilt.compiler)
 
     testImplementation(libs.junit)
-    androidTestImplementation(platform(libs.androidx.compose.bom))
+
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(libs.androidx.junit)

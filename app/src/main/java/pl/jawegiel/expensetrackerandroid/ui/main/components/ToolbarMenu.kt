@@ -16,31 +16,21 @@ fun ToolbarMenu(
     onNavigateToGasStation: () -> Unit
 ) {
     DropdownMenu(
-        expanded = menuExpanded,
-        onDismissRequest = onDismissRequest
+        expanded = menuExpanded, onDismissRequest = onDismissRequest
     ) {
-        DropdownMenuItem(
-            text = { Text("Get expenses") },
-            onClick = {
-                onDismissRequest()
-                viewModel.getExpenses()
-                onNavigateToExpenses()
-            }
-        )
-        DropdownMenuItem(
-            text = { Text("Save expense") },
-            onClick = {
-                onDismissRequest()
-                viewModel.saveExpense()
-                onNavigateToSaveExpense()
-            }
-        )
-        DropdownMenuItem(
-            text = { Text("Best gas station") },
-            onClick = {
-                onDismissRequest()
-                onNavigateToGasStation()
-            }
-        )
+        DropdownMenuItem(text = { Text("Get expenses") }, onClick = {
+            onDismissRequest()
+            viewModel.getExpenses()
+            onNavigateToExpenses()
+        })
+        DropdownMenuItem(text = { Text("Save expense") }, onClick = {
+            onDismissRequest()
+            viewModel.saveExpense()
+            onNavigateToSaveExpense()
+        })
+        DropdownMenuItem(text = { Text("Best gas station") }, onClick = {
+            onDismissRequest()
+            onNavigateToGasStation()
+        })
     }
 }
