@@ -1,9 +1,13 @@
+
+
+
+
 # ExpenseTrackerAndroid
 
 This project was generated using Kotlin version = 2.2.10 and requires minSdk = 24.
 
 ## Presentation
-<video src="ExpenseTrackerAndroid.mp4" controls title="Video"></video>
+[<video src="ExpenseTrackerAndroid.mp4" controls title="Video"></video>](https://github.com/user-attachments/assets/3b8c05f0-5d28-4d99-ab9e-cfcd1118f8f7)
 
 
 ## Preparation
